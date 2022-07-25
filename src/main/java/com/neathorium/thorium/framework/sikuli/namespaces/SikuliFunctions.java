@@ -1,5 +1,9 @@
 package com.neathorium.thorium.framework.sikuli.namespaces;
 
+import com.neathorium.thorium.core.data.namespaces.DataFunctions;
+import com.neathorium.thorium.core.data.namespaces.factories.DataFactoryFunctions;
+import com.neathorium.thorium.core.data.namespaces.predicates.DataPredicates;
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.sikuli.constants.MatchStrategyMapConstants;
 import com.neathorium.thorium.framework.sikuli.constants.RegionFunctionConstants;
 import com.neathorium.thorium.framework.sikuli.constants.SikuliDataConstants;
@@ -13,25 +17,20 @@ import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatch;
 import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatchLocator;
 
 import com.neathorium.thorium.core.constants.validators.CoreFormatterConstants;
-import com.neathorium.thorium.core.extensions.namespaces.predicates.BasicPredicates;
-import com.neathorium.thorium.core.namespaces.DataFactoryFunctions;
-import com.neathorium.thorium.core.namespaces.DataFunctions;
-import com.neathorium.thorium.core.namespaces.predicates.DataPredicates;
-import com.neathorium.thorium.core.records.Data;
 import com.neathorium.thorium.framework.core.records.GetByFilterFormatterData;
 import com.neathorium.thorium.framework.core.records.GetElementByData;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.BasicPredicates;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
 import java.util.ArrayList;
 import java.util.function.Function;
 
-import static com.neathorium.thorium.core.namespaces.DataFactoryFunctions.prependMessage;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public interface SikuliFunctions {
     static String getLocatorStrategy(LazyMatch match) {
-        return match.parameters.keySet().iterator().next();
+        return match.PARAMETERS.keySet().iterator().next();
     }
 
     static LazyMatchLocator getLazyMatchLocator(LazyMatch match) {
@@ -62,7 +61,7 @@ public interface SikuliFunctions {
                 message.append((index + 1) + ". locator returned no matches" + CoreFormatterConstants.END_LINE);
             }
 
-            matches.list.addAll(current.object);
+            matches.list.addAll(current.OBJECT());
         }
 
         final var status = BasicPredicates.isPositiveNonZero(matches.size());
@@ -89,18 +88,18 @@ public interface SikuliFunctions {
         final var guardName = "getElementBy";
         var errorMessage = "";
         if (isNotBlank(errorMessage)) {
-            return prependMessage(SikuliDataConstants.NULL_MATCH, guardName, errorMessage);
+            return DataFactoryFunctions.prependMessage(SikuliDataConstants.NULL_MATCH, guardName, errorMessage);
         }
 
-        final var nameof = defaults.nameof;
-        errorMessage = defaults.validator.apply(data, filter);
+        final var nameof = defaults.NAMEOF;
+        errorMessage = defaults.VALIDATOR.apply(data, filter);
         if (isNotBlank(errorMessage)) {
-            return prependMessage(defaults.defaultValue, nameof, errorMessage);
+            return DataFactoryFunctions.prependMessage(defaults.DEFAULT_VALUE, nameof, errorMessage);
         }
 
-        final var object = defaults.getter.apply(data, filter);
+        final var object = defaults.GETTER.apply(data, filter);
         final var status = MatchValidators.isNotNull(object);
-        final var message = defaults.formatter.apply(new GetByFilterFormatterData<>(filter, defaults.filterName, status, data.object.size(), DataFunctions.getFormattedMessage(data)));
+        final var message = defaults.FORMATTER.apply(new GetByFilterFormatterData<>(filter, defaults.FILTER_NAME, status, data.OBJECT().size(), DataFunctions.getFormattedMessage(data)));
         return DataFactoryFunctions.getWith(object, status, nameof, message);
     }
 

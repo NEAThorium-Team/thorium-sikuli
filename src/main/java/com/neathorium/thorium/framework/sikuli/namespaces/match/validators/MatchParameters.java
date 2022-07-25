@@ -1,17 +1,17 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.match.validators;
 
+import com.neathorium.thorium.core.wait.records.WaitTimeData;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.LazyMatchLocatorList;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.RegionFunction;
 import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatch;
 import com.neathorium.thorium.framework.sikuli.records.lazy.filtered.LazyFilteredMatchParameters;
 import com.neathorium.thorium.core.constants.validators.CoreFormatterConstants;
-import com.neathorium.thorium.core.extensions.namespaces.NullableFunctions;
 import com.neathorium.thorium.core.namespaces.validators.CoreFormatter;
 import com.neathorium.thorium.core.records.caster.WrappedCastData;
-import com.neathorium.thorium.core.records.wait.WaitTimeData;
 import com.neathorium.thorium.framework.core.abstracts.AbstractLazyResult;
 import com.neathorium.thorium.framework.core.namespaces.validators.FrameworkCoreFormatter;
 import com.neathorium.thorium.framework.core.records.lazy.LazyElementParameters;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.NullablePredicates;
 import org.apache.commons.lang3.StringUtils;
 import org.sikuli.script.Match;
 
@@ -28,9 +28,9 @@ public interface MatchParameters {
         var message = CoreFormatter.isNullMessageWithName(timeData, "TimeData");
         if (isBlank(message)) {
             message += (
-                CoreFormatter.isNullMessageWithName(timeData.clock, "TimeData clock") +
-                CoreFormatter.isNullMessageWithName(timeData.interval, "TimeData interval") +
-                CoreFormatter.isNullMessageWithName(timeData.duration, "TimeData duration")
+                CoreFormatter.isNullMessageWithName(timeData.CLOCK(), "TimeData clock") +
+                CoreFormatter.isNullMessageWithName(timeData.INTERVAL(), "TimeData interval") +
+                CoreFormatter.isNullMessageWithName(timeData.DURATION(), "TimeData duration")
             );
         }
 
@@ -47,7 +47,7 @@ public interface MatchParameters {
     }
 
     static <T> boolean isInvalidLazyElementParameters(LazyElementParameters<LazyMatchLocatorList> data) {
-        return NullableFunctions.isNull(data) || StringUtils.isBlank(data.GETTER) || areNullLazyData(data.LAZY_LOCATORS.list);
+        return NullablePredicates.isNull(data) || StringUtils.isBlank(data.GETTER) || areNullLazyData(data.LAZY_LOCATORS.list);
     }
 
     static boolean isValidLazyElementParameters(LazyElementParameters<LazyMatchLocatorList> data) {
@@ -55,7 +55,7 @@ public interface MatchParameters {
     }
 
     static boolean isValidLazyFilteredElement(LazyFilteredMatchParameters data) {
-        return !(isInvalidLazyElementParameters(data) || (NullableFunctions.isNull(data.ELEMENT_FILTER_DATA)) || (NullableFunctions.isNull(data.ELEMENT_FILTER_DATA.filterParameter)));
+        return !(isInvalidLazyElementParameters(data) || (NullablePredicates.isNull(data.ELEMENT_FILTER_DATA)) || (NullablePredicates.isNull(data.ELEMENT_FILTER_DATA.filterParameter)));
     }
 
 

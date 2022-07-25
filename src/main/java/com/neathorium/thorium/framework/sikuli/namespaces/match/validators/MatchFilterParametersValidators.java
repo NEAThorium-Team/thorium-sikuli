@@ -1,14 +1,14 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.match.validators;
 
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.sikuli.enums.ManyMatchesGetter;
 import com.neathorium.thorium.framework.sikuli.enums.SingleMatchGetter;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.MatchList;
 import com.neathorium.thorium.core.constants.validators.CoreFormatterConstants;
-import com.neathorium.thorium.core.extensions.namespaces.EmptiableFunctions;
 import com.neathorium.thorium.core.namespaces.validators.CoreFormatter;
-import com.neathorium.thorium.core.records.Data;
 import com.neathorium.thorium.framework.core.abstracts.element.finder.BaseFilterParameters;
 import com.neathorium.thorium.framework.core.namespaces.extensions.boilers.LazyLocatorList;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.EmptiablePredicates;
 import org.sikuli.script.Region;
 
 import java.util.Map;
@@ -58,7 +58,7 @@ public interface MatchFilterParametersValidators {
 
     static String isNullLazyLocatorListMessage(LazyLocatorList locators) {
         var message = CoreFormatter.isNullMessageWithName(locators, "Locators");
-        if (isBlank(message) && EmptiableFunctions.isEmpty(locators)) {
+        if (isBlank(message) && EmptiablePredicates.isEmpty(locators)) {
             message += "List was empty" + CoreFormatterConstants.END_LINE;
         }
 
@@ -66,7 +66,7 @@ public interface MatchFilterParametersValidators {
     }
 
     private static <T, U> String isInvalidElementFilterParametersMessageCore(BaseFilterParameters<Region, ManyMatchesGetter, MatchList> data) {
-        return isNullLazyLocatorListMessage(data.locators) + getManyMatchesGetterErrorMessage(data.getterMap, data.getter);
+        return isNullLazyLocatorListMessage(data.LOCATORS) + getManyMatchesGetterErrorMessage(data.GETTER_MAP, data.GETTER);
     }
 
     static <T, U> String isInvalidElementFilterParametersMessage(BaseFilterParameters<Region, ManyMatchesGetter, MatchList> data) {

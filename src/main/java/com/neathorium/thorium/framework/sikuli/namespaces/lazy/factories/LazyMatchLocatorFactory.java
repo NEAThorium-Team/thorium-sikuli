@@ -4,8 +4,8 @@ import com.neathorium.thorium.framework.sikuli.constants.factories.MatchLazyLoca
 import com.neathorium.thorium.framework.sikuli.enums.MatchSelectorStrategy;
 import com.neathorium.thorium.framework.sikuli.namespaces.SikuliFormatters;
 import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatchLocator;
-import com.neathorium.thorium.core.extensions.namespaces.CoreUtilities;
 import com.neathorium.thorium.core.namespaces.validators.CoreFormatter;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.EqualsPredicates;
 
 import java.util.Objects;
 
@@ -23,7 +23,7 @@ public interface LazyMatchLocatorFactory {
     }
 
     static LazyMatchLocator getWith(String locator, MatchSelectorStrategy strategy) {
-        final var precision = CoreUtilities.isEqual(strategy, MatchSelectorStrategy.TEXT) ? MatchLazyLocatorFactoryConstants.NON_IMAGE_PRECISION : MatchLazyLocatorFactoryConstants.DEFAULT_PRECISION;
+        final var precision = EqualsPredicates.isEqual(strategy, MatchSelectorStrategy.TEXT) ? MatchLazyLocatorFactoryConstants.NON_IMAGE_PRECISION : MatchLazyLocatorFactoryConstants.DEFAULT_PRECISION;
         return getWith(locator, strategy, precision);
     }
 

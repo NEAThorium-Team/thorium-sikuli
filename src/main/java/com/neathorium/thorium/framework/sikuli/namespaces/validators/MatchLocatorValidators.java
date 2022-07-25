@@ -3,8 +3,8 @@ package com.neathorium.thorium.framework.sikuli.namespaces.validators;
 import com.neathorium.thorium.framework.sikuli.constants.MatchStrategyFunctionsConstants;
 import com.neathorium.thorium.framework.sikuli.enums.MatchSelectorStrategy;
 import com.neathorium.thorium.core.constants.validators.CoreFormatterConstants;
-import com.neathorium.thorium.core.extensions.namespaces.CoreUtilities;
 import com.neathorium.thorium.core.namespaces.validators.CoreFormatter;
+import com.neathorium.thorium.java.extensions.namespaces.utilities.BooleanUtilities;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -36,7 +36,7 @@ public interface MatchLocatorValidators {
         }
 
         var path = Paths.get(locator).normalize();
-        if (CoreUtilities.isFalse(Files.exists(path))) {
+        if (BooleanUtilities.isFalse(Files.exists(path))) {
             message += "Image file (\"" + path + "\") doesn't exist" + CoreFormatterConstants.END_LINE;
         }
 

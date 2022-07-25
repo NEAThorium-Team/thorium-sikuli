@@ -1,9 +1,9 @@
 package com.neathorium.thorium.framework.sikuli.namespaces;
 
 import com.neathorium.thorium.core.constants.validators.CoreFormatterConstants;
-import com.neathorium.thorium.core.extensions.namespaces.predicates.DoublePredicates;
 import com.neathorium.thorium.core.namespaces.validators.CoreFormatter;
 import com.neathorium.thorium.framework.sikuli.constants.factories.MatchLazyLocatorFactoryConstants;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.DoublePredicates;
 
 public interface SikuliFormatters {
     static String getFindAllMessage(int size, boolean status) {

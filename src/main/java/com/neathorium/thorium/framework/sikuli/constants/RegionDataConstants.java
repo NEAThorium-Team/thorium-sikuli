@@ -1,7 +1,7 @@
 package com.neathorium.thorium.framework.sikuli.constants;
 
-import com.neathorium.thorium.core.namespaces.DataFactoryFunctions;
-import com.neathorium.thorium.core.records.Data;
+import com.neathorium.thorium.core.data.namespaces.factories.DataFactoryFunctions;
+import com.neathorium.thorium.core.data.records.Data;
 import org.sikuli.script.Match;
 
 public abstract class RegionDataConstants {

@@ -1,5 +1,13 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.repositories;
 
+import com.neathorium.selector.specificity.enums.Strategy;
+import com.neathorium.selector.specificity.namespaces.Specificity;
+import com.neathorium.selector.specificity.tuples.SpecificityData;
+import com.neathorium.thorium.core.data.constants.CoreDataConstants;
+import com.neathorium.thorium.core.data.namespaces.DataFunctions;
+import com.neathorium.thorium.core.data.namespaces.factories.DataFactoryFunctions;
+import com.neathorium.thorium.core.data.namespaces.predicates.DataPredicates;
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.sikuli.constants.MatchStrategyMapConstants;
 import com.neathorium.thorium.framework.sikuli.constants.SikuliDataConstants;
 import com.neathorium.thorium.framework.sikuli.constants.SikuliFormatterConstants;
@@ -9,29 +17,21 @@ import com.neathorium.thorium.framework.sikuli.namespaces.match.MatchRepositoryV
 import com.neathorium.thorium.framework.sikuli.records.lazy.CachedLazyMatchData;
 import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatch;
 import com.neathorium.thorium.framework.sikuli.records.lazy.filtered.LazyFilteredMatchParameters;
-import com.neathorium.thorium.core.constants.CoreDataConstants;
 import com.neathorium.thorium.core.constants.validators.CoreFormatterConstants;
-import com.neathorium.thorium.core.extensions.DecoratedList;
-import com.neathorium.thorium.core.extensions.namespaces.CoreUtilities;
-import com.neathorium.thorium.core.extensions.namespaces.NullableFunctions;
-import com.neathorium.thorium.core.namespaces.DataFactoryFunctions;
-import com.neathorium.thorium.core.namespaces.DataFunctions;
-import com.neathorium.thorium.core.namespaces.predicates.DataPredicates;
 import com.neathorium.thorium.core.namespaces.validators.CoreFormatter;
-import com.neathorium.thorium.core.records.Data;
 import com.neathorium.thorium.framework.core.abstracts.AbstractLazyResult;
 import com.neathorium.thorium.framework.core.namespaces.extensions.boilers.LazyLocatorList;
 import com.neathorium.thorium.framework.core.namespaces.repositories.CoreElementRepository;
 import com.neathorium.thorium.framework.core.namespaces.validators.FrameworkCoreFormatter;
 import com.neathorium.thorium.framework.core.selector.records.SelectorKeySpecificityData;
-import selectorSpecificity.Specificity;
-import selectorSpecificity.constants.Strategy;
-import selectorSpecificity.tuples.SpecificityData;
+import com.neathorium.thorium.java.extensions.classes.DecoratedList;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.EqualsPredicates;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.NullablePredicates;
+import com.neathorium.thorium.java.extensions.namespaces.utilities.BooleanUtilities;
 
 import java.util.List;
 import java.util.Map;
 
-import static com.neathorium.thorium.core.namespaces.predicates.DataPredicates.isValidNonFalse;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public interface MatchRepository {
@@ -42,7 +42,7 @@ public interface MatchRepository {
             return DataFactoryFunctions.replaceMessage(defaultValue, nameof, SikuliFormatterConstants.LAZY_MATCH + " " + CoreFormatterConstants.WAS_NULL);
         }
 
-        final var name = element.name;
+        final var name = element.NAME;
         if (elementRepository.containsKey(name)) {
             return DataFactoryFunctions.replaceMessage(defaultValue, nameof, SikuliFormatterConstants.LAZY_MATCH + " with name(\"" + name + "\") was already stored" + CoreFormatterConstants.END_LINE);
         }
@@ -68,7 +68,7 @@ public interface MatchRepository {
             return DataFactoryFunctions.replaceMessage(defaultValue, nameof, errorMessage);
         }
 
-        final var defaultObject = defaultValue.object;
+        final var defaultObject = defaultValue.OBJECT();
         final var object = elementRepository.containsKey(name);
         final var message = SikuliFormatterConstants.LAZY_MATCH + CoreFormatter.getOptionMessage(object) + " found by name(\"" + name + "\")" + CoreFormatterConstants.END_LINE;
 
@@ -90,9 +90,9 @@ public interface MatchRepository {
             return DataFactoryFunctions.replaceMessage(defaultValue, nameof, errorMessage);
         }
 
-        final var defaultObject = defaultValue.object;
+        final var defaultObject = defaultValue.OBJECT();
         final var object = elementRepository.getOrDefault(name, defaultObject);
-        final var status = CoreUtilities.isNotEqual(object, defaultObject);
+        final var status = EqualsPredicates.isNotEqual(object, defaultObject);
         final var message = SikuliFormatterConstants.LAZY_MATCH + CoreFormatter.getOptionMessage(status) + " found by name(\"" + name + "\")" + CoreFormatterConstants.END_LINE;
 
         return DataFactoryFunctions.getWith(object, status, nameof, message);
@@ -111,11 +111,11 @@ public interface MatchRepository {
     }
 
     static <T> String cacheIfAbsent(AbstractLazyResult<LazyFilteredMatchParameters> element, Map<String, DecoratedList<SelectorKeySpecificityData>> typeKeys) {
-        final var cached = MatchRepository.containsElement(element.name);
+        final var cached = MatchRepository.containsElement(element.NAME);
 
         var message = "";
-        if (isValidNonFalse(cached) && !cached.object) {
-            final var cachedElement = new LazyMatch(element.name, SikuliUtilities.getParametersCopy(element.parameters), element.validator);
+        if (DataPredicates.isValidNonFalse(cached) && !cached.OBJECT()) {
+            final var cachedElement = new LazyMatch(element.NAME, SikuliUtilities.getParametersCopy(element.PARAMETERS), element.VALIDATOR);
             message = DataFunctions.getFormattedMessage(MatchRepository.cacheMatch(cachedElement, typeKeys));
         }
 
@@ -127,13 +127,13 @@ public interface MatchRepository {
     }
 
     static <T> Data<CachedLazyMatchData> getIfContains(AbstractLazyResult<T> element) {
-        final var name = element.name;
-        return isValidNonFalse(MatchRepository.containsElement(name)) ? MatchRepository.getElement(name) : SikuliDataConstants.MATCH_WAS_NOT_CACHED;
+        final var name = element.NAME;
+        return DataPredicates.isValidNonFalse(MatchRepository.containsElement(name)) ? MatchRepository.getElement(name) : SikuliDataConstants.MATCH_WAS_NOT_CACHED;
     }
 
     static Data<Boolean> updateTypeKeys(LazyLocatorList locators, Map<String, DecoratedList<SelectorKeySpecificityData>> typeKeys, List<String> types, String key) {
         final var nameof = "updateTypeKeys";
-        if (NullableFunctions.isNull(key)) {
+        if (NullablePredicates.isNull(key)) {
             return DataFactoryFunctions.replaceMessage(CoreDataConstants.NULL_BOOLEAN, nameof, "Strategy passed" + CoreFormatterConstants.WAS_NULL);
         }
 
@@ -144,7 +144,7 @@ public interface MatchRepository {
 
         final var type = typeKeys.get(typeKey.get());
         final var selectorKeySpecificityData = getSpecificityForSelector(locators, key);
-        if (NullableFunctions.isNotNull(type)) {
+        if (NullablePredicates.isNotNull(type)) {
             type.addNullSafe(selectorKeySpecificityData);
         }
 
@@ -160,7 +160,7 @@ public interface MatchRepository {
             return DataFactoryFunctions.prependMessage(cached, nameof, "There were parameter issues" + CoreFormatterConstants.END_LINE);
         }
 
-        return !cached.object ? (updateTypeKeys(locators, typeKeys, types, key)) : DataFactoryFunctions.getBoolean(true, nameof, "Element(\"" + name + "\") was already cached" + CoreFormatterConstants.END_LINE);
+        return BooleanUtilities.isFalse(cached.OBJECT()) ? (updateTypeKeys(locators, typeKeys, types, key)) : DataFactoryFunctions.getBoolean(true, nameof, "Element(\"" + name + "\") was already cached" + CoreFormatterConstants.END_LINE);
     }
 
     static SelectorKeySpecificityData getSpecificityForSelector(LazyLocatorList list, String key) {
@@ -168,7 +168,7 @@ public interface MatchRepository {
             key,
             Specificity.reduce(
                 list.stream().map(
-                    locator -> Specificity.getSelectorSpecificity(locator.LOCATOR, Strategy.OTHER).specifics
+                    locator -> Specificity.getSelectorSpecificity(locator.LOCATOR, Strategy.OTHER).SPECIFICS
                 ).toArray(SpecificityData[]::new)
             )
         );

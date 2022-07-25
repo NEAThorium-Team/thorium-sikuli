@@ -1,11 +1,11 @@
 package com.neathorium.thorium.framework.sikuli.records.lazy.filtered;
 
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.sikuli.enums.ManyMatchesGetter;
 import com.neathorium.thorium.framework.sikuli.namespaces.region.RegionFunctionFactory;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.MatchList;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.RegionFunction;
 import com.neathorium.thorium.framework.sikuli.records.MatchFilterParameters;
-import com.neathorium.thorium.core.records.Data;
 import com.neathorium.thorium.framework.core.abstracts.element.finder.BaseFilterParameters;
 import com.neathorium.thorium.framework.core.abstracts.lazy.filtered.BaseFilterData;
 import org.sikuli.script.Match;

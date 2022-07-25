@@ -1,7 +1,7 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.validators;
 
-import com.neathorium.thorium.core.namespaces.predicates.DataPredicates;
-import com.neathorium.thorium.core.records.Data;
+import com.neathorium.thorium.core.data.namespaces.predicates.DataPredicates;
+import com.neathorium.thorium.core.data.records.Data;
 import org.sikuli.script.Match;
 
 public interface MatchDataValidators {
