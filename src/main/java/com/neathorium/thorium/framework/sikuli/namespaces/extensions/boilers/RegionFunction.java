@@ -1,6 +1,6 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers;
 
-import com.neathorium.thorium.core.records.Data;
+import com.neathorium.thorium.core.data.records.Data;
 import org.sikuli.script.Region;
 
 import java.util.function.Function;

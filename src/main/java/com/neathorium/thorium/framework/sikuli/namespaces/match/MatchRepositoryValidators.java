@@ -1,8 +1,8 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.match;
 
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.sikuli.records.lazy.CachedLazyMatchData;
 import com.neathorium.thorium.core.namespaces.validators.CoreFormatter;
-import com.neathorium.thorium.core.records.Data;
 
 import java.util.Map;
 

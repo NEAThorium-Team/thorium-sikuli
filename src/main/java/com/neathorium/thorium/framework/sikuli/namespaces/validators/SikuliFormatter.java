@@ -1,9 +1,9 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.validators;
 
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.MatchList;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.RegionFunction;
 import com.neathorium.thorium.core.namespaces.validators.CoreFormatter;
-import com.neathorium.thorium.core.records.Data;
 import com.neathorium.thorium.framework.core.namespaces.extensions.boilers.LazyLocatorList;
 import com.neathorium.thorium.framework.core.records.lazy.LazyLocator;
 import org.sikuli.script.Region;

@@ -1,7 +1,7 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers;
 
 import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatchLocator;
-import com.neathorium.thorium.core.extensions.DecoratedList;
+import com.neathorium.thorium.java.extensions.classes.DecoratedList;
 
 import java.util.List;
 

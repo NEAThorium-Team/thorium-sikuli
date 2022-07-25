@@ -1,14 +1,12 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.region;
 
+import com.neathorium.thorium.core.data.namespaces.factories.DataFactoryFunctions;
+import com.neathorium.thorium.core.data.records.Data;
+import com.neathorium.thorium.core.namespaces.DataExecutionFunctions;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.RegionFunction;
 import com.neathorium.thorium.core.constants.CoreConstants;
 import com.neathorium.thorium.core.constants.ExecutorConstants;
 import com.neathorium.thorium.core.constants.validators.CoreFormatterConstants;
-import com.neathorium.thorium.core.extensions.interfaces.functional.QuadFunction;
-import com.neathorium.thorium.core.extensions.interfaces.functional.TriPredicate;
-import com.neathorium.thorium.core.extensions.interfaces.functional.boilers.IGetMessage;
-import com.neathorium.thorium.core.namespaces.BaseExecutionFunctions;
-import com.neathorium.thorium.core.namespaces.DataFactoryFunctions;
 import com.neathorium.thorium.core.namespaces.executor.ExecutionParametersDataFactory;
 import com.neathorium.thorium.core.namespaces.executor.ExecutionResultDataFactory;
 import com.neathorium.thorium.core.namespaces.executor.ExecutionStateDataFactory;
@@ -16,18 +14,19 @@ import com.neathorium.thorium.core.namespaces.executor.ExecutionStepsDataFactory
 import com.neathorium.thorium.core.namespaces.executor.Executor;
 import com.neathorium.thorium.core.namespaces.executor.ExecutorFunctionDataFactory;
 import com.neathorium.thorium.core.namespaces.validators.CoreFormatter;
-import com.neathorium.thorium.core.records.Data;
 import com.neathorium.thorium.core.records.SimpleMessageData;
 import com.neathorium.thorium.core.records.executor.ExecutionParametersData;
 import com.neathorium.thorium.core.records.executor.ExecutionResultData;
 import com.neathorium.thorium.core.records.executor.ExecutionStateData;
 import com.neathorium.thorium.core.records.executor.ExecutionStepsData;
+import com.neathorium.thorium.java.extensions.interfaces.functional.QuadFunction;
+import com.neathorium.thorium.java.extensions.interfaces.functional.TriPredicate;
+import com.neathorium.thorium.java.extensions.interfaces.functional.boilers.IGetMessage;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.NullablePredicates;
 import org.sikuli.script.Region;
 
 import java.util.Arrays;
 import java.util.function.Function;
-
-import static com.neathorium.thorium.core.extensions.namespaces.NullableFunctions.isNotNull;
 
 public interface RegionExecutor {
     private static <ReturnType, ParameterReturnType> RegionFunction<ReturnType> executeGuardCore(
@@ -36,7 +35,7 @@ public interface RegionExecutor {
         Data<ReturnType> negative,
         int stepLength
     ) {
-        return RegionFunctionFactory.get(BaseExecutionFunctions.ifDependency("executeGuardCore", CoreFormatter.getCommandAmountRangeErrorMessage(stepLength, execution.range), executionChain, negative));
+        return RegionFunctionFactory.get(DataExecutionFunctions.ifDependency("executeGuardCore", CoreFormatter.getCommandAmountRangeErrorMessage(stepLength, execution.range), executionChain, negative));
     }
 
     @SafeVarargs
@@ -54,7 +53,7 @@ public interface RegionExecutor {
         ExecutionParametersData<Function<Region, Data<?>>, RegionFunction<ExecutionResultData<ReturnType>>> execution
     ) {
         final var result = execute(execution, ExecutionStateDataFactory.getWithDefaults(), stepsData.steps).apply(stepsData.dependency);
-        return DataFactoryFunctions.replaceObject(result, result.object.result);
+        return DataFactoryFunctions.replaceObject(result, result.OBJECT().result);
     }
 
     private static <ReturnType> RegionFunction<ReturnType> executeData(
@@ -123,7 +122,7 @@ public interface RegionExecutor {
     }
 
     static <ReturnType> RegionFunction<ExecutionResultData<ReturnType>> execute(IGetMessage stepMessage, ExecutionStateData stateData, RegionFunction<?>... steps) {
-        final var localStateData = (isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
+        final var localStateData = (NullablePredicates.isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
         return RegionFunctionFactory.get(Executor.execute(
             ExecutionParametersDataFactory.getWithDefaultRange(
                 ExecutorFunctionDataFactory.getWithExecuteParametersDataAndDefaultExitCondition(stepMessage, ExecutorConstants.DEFAULT_EXECUTION_DATA),
@@ -135,7 +134,7 @@ public interface RegionExecutor {
     }
 
     static <ReturnType> RegionFunction<ExecutionResultData<ReturnType>> execute(String message, ExecutionStateData stateData, RegionFunction<?>... steps) {
-        final var localStateData = (isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
+        final var localStateData = (NullablePredicates.isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
         return RegionFunctionFactory.get(Executor.execute(
             ExecutionParametersDataFactory.getWithDefaultRange(
                 ExecutorFunctionDataFactory.getWithSpecificMessage(message),
@@ -147,7 +146,7 @@ public interface RegionExecutor {
     }
 
     static <ReturnType> RegionFunction<ExecutionResultData<ReturnType>> execute(QuadFunction<ExecutionStateData, String, Integer, Integer, String> messageHandler, ExecutionStateData stateData, RegionFunction<?>... steps) {
-        final var localStateData = (isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
+        final var localStateData = (NullablePredicates.isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
         return RegionFunctionFactory.get(Executor.execute(
             ExecutionParametersDataFactory.getWithTwoCommandsRange(
                 ExecutorFunctionDataFactory.getWithDefaultExitConditionAndMessageData(messageHandler),
@@ -159,14 +158,14 @@ public interface RegionExecutor {
     }
 
     static <ReturnType> RegionFunction<ExecutionResultData<ReturnType>> execute(ExecutionStateData stateData, RegionFunction<?>... steps) {
-        final var localStateData = (isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
+        final var localStateData = (NullablePredicates.isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
         return RegionFunctionFactory.get(Executor.execute(ExecutionParametersDataFactory.getWithDefaultFunctionDataAndDefaultRange(Executor::execute), localStateData, steps));
     }
 
 
     static <ReturnType> RegionFunction<ExecutionResultData<ReturnType>> conditionalSequence(TriPredicate<Data<?>, Integer, Integer> guard, ExecutionStateData stateData, RegionFunction<?> before, RegionFunction<?> after) {
         final RegionFunction<?>[] steps = Arrays.asList(before, after).toArray(new RegionFunction<?>[0]);
-        final var localStateData = (isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
+        final var localStateData = (NullablePredicates.isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
         return RegionFunctionFactory.get(Executor.execute(
             ExecutionParametersDataFactory.getWithTwoCommandsRange(
                 ExecutorFunctionDataFactory.getWithSpecificMessageDataAndBreakCondition(new SimpleMessageData(CoreFormatterConstants.EXECUTION_ENDED), guard),
@@ -179,7 +178,7 @@ public interface RegionExecutor {
 
     static <T, U, ReturnType> RegionFunction<ExecutionResultData<ReturnType>> conditionalSequence(ExecutionStateData stateData, RegionFunction<T> before, RegionFunction<U> after, Class<ReturnType> clazz) {
         final RegionFunction<?>[] steps = Arrays.asList(before, after).toArray(new RegionFunction<?>[0]);
-        final var localStateData = (isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
+        final var localStateData = (NullablePredicates.isNotNull(stateData.indices) && !stateData.indices.isEmpty()) ? stateData : ExecutionStateDataFactory.getWith(stateData.executionMap, steps.length);
         return RegionFunctionFactory.get(Executor.execute(
             ExecutionParametersDataFactory.getWithDefaultFunctionDataAndTwoCommandRange(Executor::execute),
             localStateData,

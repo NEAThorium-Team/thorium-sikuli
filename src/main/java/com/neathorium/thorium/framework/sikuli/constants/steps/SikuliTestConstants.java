@@ -1,10 +1,10 @@
 package com.neathorium.thorium.framework.sikuli.constants.steps;
 
+import com.neathorium.thorium.core.data.interfaces.DataSupplier;
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.sikuli.environment.enums.ScreenKey;
 import com.neathorium.thorium.framework.sikuli.environment.namespaces.ScreenFactory;
-import com.neathorium.thorium.core.extensions.interfaces.functional.boilers.DataSupplier;
 import com.neathorium.thorium.core.namespaces.executor.step.StepFactory;
-import com.neathorium.thorium.core.records.Data;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 

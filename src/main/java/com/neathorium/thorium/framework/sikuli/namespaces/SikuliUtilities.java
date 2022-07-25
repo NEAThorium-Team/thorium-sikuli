@@ -1,6 +1,6 @@
 package com.neathorium.thorium.framework.sikuli.namespaces;
 
-import com.neathorium.thorium.core.namespaces.exception.ExceptionFunctions;
+import com.neathorium.thorium.exceptions.namespaces.ExceptionFunctions;
 import com.neathorium.thorium.framework.sikuli.constants.SikuliCoreConstants;
 import com.neathorium.thorium.framework.sikuli.constants.SikuliFormatterConstants;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.LazyMatchLocatorList;
@@ -9,10 +9,13 @@ import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatch;
 import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatchLocator;
 import com.neathorium.thorium.framework.sikuli.records.lazy.filtered.LazyFilteredMatchParameters;
 import com.neathorium.thorium.framework.sikuli.records.lazy.filtered.MatchFilterData;
-import com.neathorium.thorium.core.extensions.namespaces.CoreUtilities;
-import com.neathorium.thorium.core.extensions.namespaces.EmptiableFunctions;
-import com.neathorium.thorium.core.namespaces.StringUtilities;
 import com.neathorium.thorium.framework.core.records.lazy.LazyLocator;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.EmptiablePredicates;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.EqualsPredicates;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.GuardPredicates;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.NullablePredicates;
+import com.neathorium.thorium.java.extensions.namespaces.utilities.StringUtilities;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -20,25 +23,22 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import static com.neathorium.thorium.core.extensions.namespaces.CoreUtilities.areAll;
-import static com.neathorium.thorium.core.extensions.namespaces.NullableFunctions.isNull;
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public interface SikuliUtilities {
     static boolean isFindFailed(Exception ex) {
         return StringUtilities.contains(ex.getLocalizedMessage(), SikuliFormatterConstants.FIND_ALL_EXCEPTION_FRAGMENT);
     }
     static boolean isValidFindFailedException(Exception exception) {
-        return ExceptionFunctions.isException(exception) && CoreUtilities.isNotEqual(exception.getLocalizedMessage(), SikuliCoreConstants.INVALID_FIND_FAILED_EXCEPTION.getLocalizedMessage()) && isFindFailed(exception);
+        return ExceptionFunctions.isException(exception) && EqualsPredicates.isNotEqual(exception.getLocalizedMessage(), SikuliCoreConstants.INVALID_FIND_FAILED_EXCEPTION.getLocalizedMessage()) && isFindFailed(exception);
     }
 
 
     static boolean isInvalidLazyLocator(LazyLocator data) {
-        return isNull(data) || isBlank(data.LOCATOR) || isNull(data.STRATEGY);
+        return NullablePredicates.isNull(data) || StringUtils.isBlank(data.LOCATOR) || NullablePredicates.isNull(data.STRATEGY);
     }
 
     static boolean areNullLazyData(LazyLocator... data) {
-        return areAll(SikuliUtilities::isInvalidLazyLocator, data);
+        return GuardPredicates.areAll(SikuliUtilities::isInvalidLazyLocator, data);
     }
 
     static LazyLocator[] getEmptyLazyLocatorArray() {
@@ -50,7 +50,7 @@ public interface SikuliUtilities {
     }
 
     static boolean isNullLazyDataList(LazyMatchLocatorList list) {
-        return EmptiableFunctions.isNullOrEmpty(list) || areNullLazyData(list.list);
+        return EmptiablePredicates.isNullOrEmpty(list) || areNullLazyData(list.list);
     }
 
     static boolean isNotNullLazyData(LazyLocator data) {
@@ -69,11 +69,11 @@ public interface SikuliUtilities {
 
     static boolean isNullLazyMatch(LazyMatch element) {
         return (
-            isNull(element) ||
-            isBlank(element.name) ||
-            CoreUtilities.areAnyNull(element.parameters, element.validator) ||
-            element.parameters.isEmpty() ||
-            isNullAbstractLazyElementParametersList(element.parameters.values(), element.validator)
+            NullablePredicates.isNull(element) ||
+            StringUtils.isBlank(element.NAME) ||
+            NullablePredicates.areAnyNull(element.PARAMETERS, element.VALIDATOR) ||
+            element.PARAMETERS.isEmpty() ||
+            isNullAbstractLazyElementParametersList(element.PARAMETERS.values(), element.VALIDATOR)
         );
     }
 

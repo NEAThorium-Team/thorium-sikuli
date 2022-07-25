@@ -1,6 +1,6 @@
 package com.neathorium.thorium.framework.sikuli.enums;
 
-import com.neathorium.thorium.core.extensions.namespaces.EnumExtensionFunctions;
+import com.neathorium.thorium.java.extensions.namespaces.enums.EnumExtensionFunctions;
 
 import java.util.HashMap;
 import java.util.Map;

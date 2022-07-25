@@ -1,15 +1,15 @@
 package com.neathorium.thorium.framework.sikuli.namespaces.predicates;
 
-import com.neathorium.thorium.core.namespaces.exception.ExceptionFunctions;
+import com.neathorium.thorium.exceptions.namespaces.ExceptionFunctions;
 import com.neathorium.thorium.framework.sikuli.constants.SikuliCoreConstants;
 import com.neathorium.thorium.framework.sikuli.constants.SikuliFormatterConstants;
-import com.neathorium.thorium.core.extensions.namespaces.CoreUtilities;
-import com.neathorium.thorium.core.namespaces.StringUtilities;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.EqualsPredicates;
+import com.neathorium.thorium.java.extensions.namespaces.utilities.StringUtilities;
 import org.sikuli.script.FindFailed;
 
 public interface FindFailedPredicates {
     static boolean isValidFindFailedException(FindFailed exception) {
-        return ExceptionFunctions.isException(exception) && CoreUtilities.isNotEqual(exception, SikuliCoreConstants.INVALID_FIND_FAILED_EXCEPTION);
+        return ExceptionFunctions.isException(exception) && EqualsPredicates.isNotEqual(exception, SikuliCoreConstants.INVALID_FIND_FAILED_EXCEPTION);
     }
 
     static boolean isFindFailed(Exception ex) {

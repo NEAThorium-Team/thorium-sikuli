@@ -6,7 +6,7 @@ import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.Mat
 import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatchLocator;
 import com.neathorium.thorium.framework.sikuli.records.lazy.filtered.LazyFilteredMatchParameters;
 import com.neathorium.thorium.framework.sikuli.records.lazy.filtered.MatchFilterData;
-import com.neathorium.thorium.core.extensions.constants.IExtendedListConstants;
+import com.neathorium.thorium.java.extensions.constants.IExtendedListConstants;
 import org.sikuli.script.Match;
 
 import static com.neathorium.thorium.framework.sikuli.constants.LazyIndexedMatchFactoryConstants.GETTER;

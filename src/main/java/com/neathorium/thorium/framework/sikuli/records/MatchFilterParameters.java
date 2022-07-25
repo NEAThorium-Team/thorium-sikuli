@@ -1,6 +1,6 @@
 package com.neathorium.thorium.framework.sikuli.records;
 
-import com.neathorium.thorium.core.records.Data;
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.core.abstracts.element.finder.BaseFilterParameters;
 import com.neathorium.thorium.framework.core.namespaces.extensions.boilers.LazyLocatorList;
 import org.sikuli.script.Region;

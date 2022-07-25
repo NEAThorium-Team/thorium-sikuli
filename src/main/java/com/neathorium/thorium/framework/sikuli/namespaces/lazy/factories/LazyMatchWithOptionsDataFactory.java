@@ -5,19 +5,19 @@ import com.neathorium.thorium.framework.sikuli.constants.SikuliCoreConstants;
 import com.neathorium.thorium.framework.sikuli.records.ExternalSikuliSelectorData;
 import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatch;
 import com.neathorium.thorium.framework.sikuli.records.lazy.LazyMatchWithOptionsData;
-import com.neathorium.thorium.core.extensions.DecoratedList;
 import com.neathorium.thorium.framework.core.constants.AdjusterConstants;
 import com.neathorium.thorium.framework.core.constants.SelectorDataConstants;
 import com.neathorium.thorium.framework.core.records.InternalSelectorData;
 import com.neathorium.thorium.framework.core.records.ProbabilityData;
+import com.neathorium.thorium.java.extensions.classes.DecoratedList;
 
 public interface LazyMatchWithOptionsDataFactory {
     static LazyMatchWithOptionsData get(
-            LazyMatch match,
-            InternalSelectorData internalData,
-            ExternalSikuliSelectorData externalData,
-            DecoratedList<String> getOrder,
-            ProbabilityData probabilityData
+        LazyMatch match,
+        InternalSelectorData internalData,
+        ExternalSikuliSelectorData externalData,
+        DecoratedList<String> getOrder,
+        ProbabilityData probabilityData
     ) {
         return new LazyMatchWithOptionsData(match, internalData, externalData, getOrder, probabilityData);
     }

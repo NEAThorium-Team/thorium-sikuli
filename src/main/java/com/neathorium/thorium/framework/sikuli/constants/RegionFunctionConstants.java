@@ -1,17 +1,17 @@
 package com.neathorium.thorium.framework.sikuli.constants;
 
+import com.neathorium.thorium.core.data.constants.CoreDataConstants;
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.sikuli.enums.SikuliTypeKey;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.MatchList;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.RegionFunction;
 import com.neathorium.thorium.framework.sikuli.namespaces.region.RegionFunctionFactory;
 import com.neathorium.thorium.framework.sikuli.records.SikuliTypedEnumKeyData;
-import com.neathorium.thorium.core.constants.CoreDataConstants;
-import com.neathorium.thorium.core.extensions.boilers.StringSet;
-import com.neathorium.thorium.core.namespaces.StringUtilities;
-import com.neathorium.thorium.core.records.Data;
 import com.neathorium.thorium.framework.core.namespaces.validators.FrameworkCoreFormatter;
 import com.neathorium.thorium.framework.core.namespaces.validators.GetterValidators;
 import com.neathorium.thorium.framework.core.records.GetElementByData;
+import com.neathorium.thorium.java.extensions.classes.boilers.StringSet;
+import com.neathorium.thorium.java.extensions.namespaces.utilities.StringUtilities;
 import org.sikuli.script.Match;
 
 import java.util.Collections;
@@ -27,7 +27,7 @@ public abstract class RegionFunctionConstants {
     public static final RegionFunction<Boolean> NULL_BOOLEAN = RegionFunctionFactory.get(CoreDataConstants.NULL_BOOLEAN);
     public static final RegionFunction<String> NULL_STRING = RegionFunctionFactory.get(CoreDataConstants.NULL_STRING);
     public static final RegionFunction<Integer> NULL_INTEGER = RegionFunctionFactory.get(CoreDataConstants.NULL_INTEGER);
-    public static final RegionFunction<StringSet> NULL_STRINGSET = RegionFunctionFactory.get(CoreDataConstants.NULL_STRING_SET);
+    public static final RegionFunction<StringSet> NULL_STRINGSET = RegionFunctionFactory.get(SikuliDataConstants.NULL_STRING_SET_DATA);
     public static final RegionFunction<Boolean> LAZY_ELEMENT_WAIT_PARAMETERS_WERE_NULL = RegionFunctionFactory.get(SikuliDataConstants.LAZY_ELEMENT_WAIT_PARAMETERS_WERE_NULL);
     public static final RegionFunction<Boolean> LAZY_ELEMENT_WAS_NULL = RegionFunctionFactory.get(SikuliDataConstants.LAZY_ELEMENT_WAS_NULL);
     public static final RegionFunction<Match> NULL_WEBELEMENT = RegionFunctionFactory.get(SikuliDataConstants.NULL_MATCH);
@@ -65,11 +65,11 @@ public abstract class RegionFunctionConstants {
     );
 
     private static Match getByIndex(Data<MatchList> data, int index) {
-        return data.object.get(index);
+        return data.OBJECT().get(index);
     }
 
     private static Match getByContainedText(Data<MatchList> data, String text) {
-        final var list = data.object;
+        final var list = data.OBJECT();
         final var size = list.size();
         var object = SikuliCoreConstants.STOCK_MATCH;
         var index = 0;

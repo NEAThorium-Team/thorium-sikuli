@@ -1,7 +1,7 @@
 package com.neathorium.thorium.framework.sikuli.rework.namespaces.factory;
 
 import com.neathorium.thorium.framework.sikuli.rework.records.RepeatableFindData;
-import com.neathorium.thorium.core.extensions.namespaces.NullableFunctions;
+import com.neathorium.thorium.java.extensions.namespaces.predicates.NullablePredicates;
 import org.sikuli.script.Element;
 import org.sikuli.script.Finder;
 import org.sikuli.script.Image;
@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public interface RepeatableFindDataFactory {
     static <T> RepeatableFindData<T> getWith(T target, List<Match> match, Finder finder, Image image) {
         var localImage = image;
-        if (NullableFunctions.isNull(image)) {
+        if (NullablePredicates.isNull(image)) {
             localImage = Element.getImageFromTarget(target);
         } else {
             if (target instanceof ScreenImage) {

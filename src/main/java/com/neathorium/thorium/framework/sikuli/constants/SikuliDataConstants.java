@@ -1,14 +1,15 @@
 package com.neathorium.thorium.framework.sikuli.constants;
 
+import com.neathorium.thorium.core.data.namespaces.factories.DataFactoryFunctions;
+import com.neathorium.thorium.core.data.records.Data;
 import com.neathorium.thorium.framework.sikuli.namespaces.extensions.boilers.MatchList;
 import com.neathorium.thorium.framework.sikuli.namespaces.repositories.MatchRepository;
 import com.neathorium.thorium.framework.sikuli.records.ExternalMatchData;
 import com.neathorium.thorium.framework.sikuli.records.lazy.CachedLazyMatchData;
 import com.neathorium.thorium.core.constants.validators.CoreFormatterConstants;
-import com.neathorium.thorium.core.extensions.DecoratedList;
-import com.neathorium.thorium.core.namespaces.DataFactoryFunctions;
-import com.neathorium.thorium.core.records.Data;
 import com.neathorium.thorium.framework.core.selector.records.SelectorKeySpecificityData;
+import com.neathorium.thorium.java.extensions.classes.DecoratedList;
+import com.neathorium.thorium.java.extensions.classes.boilers.StringSet;
 import org.sikuli.script.Match;
 
 import java.util.Map;
@@ -28,4 +29,6 @@ public abstract class SikuliDataConstants {
 
     public static final Data<Boolean> LAZY_ELEMENT_WAIT_PARAMETERS_WERE_NULL = DataFactoryFunctions.getBoolean(false, SikuliFormatterConstants.LAZY_MATCH_WAIT_PARAMETERS_WERE_NULL);
     public static final Data<Boolean> LAZY_ELEMENT_WAS_NULL = DataFactoryFunctions.getBoolean(false, SikuliFormatterConstants.LAZY_MATCH_WAS_NULL);
+
+    public static final Data<StringSet> NULL_STRING_SET_DATA = DataFactoryFunctions.getInvalidWith(SikuliCoreConstants.NULL_STRING_SET, "nullStringSet", "Null String Set data" + CoreFormatterConstants.END_LINE);
 }
